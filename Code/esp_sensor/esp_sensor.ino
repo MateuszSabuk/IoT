@@ -90,7 +90,7 @@ void loop() {
     Serial.print("Pressure: "); Serial.println(press);
     Serial.print("Luminosity: "); Serial.println(lum);
 
-    sleep(10);  // Delay between updates
+    sleep(60);  // Delay one minute
   } else {
     // Device is not connected;
     sleep(30);

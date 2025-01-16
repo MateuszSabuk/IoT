@@ -8,7 +8,44 @@ sudo systemctl start emqx
 
 Connected to rpi on port 18083
 
-For the wifi on RPI:
+Installed docker using [tutorial](https://docs.docker.com/engine/install/raspberry-pi-os/#install-from-a-package)
+Grafana [tutorial](https://grafana.com/tutorials/install-grafana-on-raspberry-pi/)
 ```bash
-sudo nmcli device wifi hotspot con-name CONNNAME ssid SSID band bg password PASSWORD
+#sudo systemctl start docker
+#sudo systemctl enable docker
+#docker run -d --name=grafana -p 3001:3000 -v grafana_config:/etc/grafana -v grafana_data:/var/lib/grafana -v grafana_logs:/var/log/grafana grafana/grafana
+#docker run -d --name mysqldb -p 3306:3306 -v db_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=password mysql:latest
+
+sudo apt install mariadb-server
+sudo mysql_secure_installation
+#docker exec -it mysqldb bash
+mysql -u root -p
+```
+
+```sql
+CREATE DATABASE IOT;
+CREATE TABLE IOT.Humidity (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    SensorValue FLOAT
+);
+
+CREATE TABLE IOT.Luminosity (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    SensorValue FLOAT
+);
+
+CREATE TABLE IOT.Pressure (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    SensorValue FLOAT
+);
+
+CREATE TABLE IOT.Temperature (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    SensorValue FLOAT
+);
+
 ```
