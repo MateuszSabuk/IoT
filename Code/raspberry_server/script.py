@@ -1,3 +1,4 @@
+
 import time
 import mysql.connector
 from mysql.connector import Error, MySQLConnection
@@ -70,10 +71,23 @@ def mqtt_client():
     client.connect(mqtt_broker, mqtt_port, 60)
     client.loop_start()
 
+def connect_to_server():
+    global connection
+    try:
+        connection = mysql.connector.connect(**db_config)
+    except:
+        pass
+    while connection == None or not connection.is_connected():
+        time.sleep(5)
+        try:
+            connection = mysql.connector.connect(**db_config)
+        except:
+            pass
+    print("Connected to mysql server")
 
 if __name__ == "__main__":
-    connection = mysql.connector.connect(**db_config)
-    
+    time.sleep(30)
+    connect_to_server()
     # Start MQTT client
     mqtt_client()
 

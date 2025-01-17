@@ -47,5 +47,30 @@ CREATE TABLE IOT.Temperature (
     Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
     SensorValue FLOAT
 );
+```
 
+/etc/systemd/system/mqtt2mariadb.service
+```ini
+[Unit]
+Description=Python script for mqtt data saving
+After=mariadb.service
+
+[Service]
+ExecStart=/home/mati/env/bin/python3 /home/mati/script.py
+
+[Install]
+WantedBy=multi-user.target
+```
+
+/etc/systemd/system/ngrok.service
+```ini
+[Unit]
+Description=Ngrok remote access
+
+[Service]
+ExecStart=ngrok http --url=steadily-alert-minnow.ngrok-free.app 3000
+User=mati
+
+[Install]
+WantedBy=multi-user.target
 ```
