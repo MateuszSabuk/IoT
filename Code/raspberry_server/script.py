@@ -19,7 +19,7 @@ connection: MySQLConnection  = None
 # MQTT configuration
 mqtt_broker = "192.168.1.50"
 mqtt_port = 1883
-mqtt_topics = ["esp32sensor/humidity", "esp32sensor/luminosity", "esp32sensor/pressure", "esp32sensor/temperature"]
+mqtt_topics = ["sensor/plant/coffea/+"]
 
 def insert_sensor_data(table_name, sensor_value, timestamp):
     try:
@@ -45,13 +45,13 @@ def on_message(client, userdata, msg):
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         # Determine the appropriate table based on the topic
-        if msg.topic == "esp32sensor/humidity":
+        if msg.topic == "sensor/plant/coffea/humidity":
             insert_sensor_data("Humidity", sensor_value, timestamp)
-        elif msg.topic == "esp32sensor/luminosity":
+        elif msg.topic == "sensor/plant/coffea/luminosity":
             insert_sensor_data("Luminosity", sensor_value, timestamp)
-        elif msg.topic == "esp32sensor/pressure":
+        elif msg.topic == "sensor/plant/coffea/pressure":
             insert_sensor_data("Pressure", sensor_value, timestamp)
-        elif msg.topic == "esp32sensor/temperature":
+        elif msg.topic == "sensor/plant/coffea/temperature":
             insert_sensor_data("Temperature", sensor_value, timestamp)
         else:
             print("Unknown topic")
