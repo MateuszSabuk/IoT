@@ -1,10 +1,9 @@
-
 import time
 import mysql.connector
 from mysql.connector import Error, MySQLConnection
 import paho.mqtt.client as mqtt
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Database configuration
 db_config = {
@@ -42,7 +41,7 @@ def on_message(client, userdata, msg):
         # Decode message payload (assuming it's JSON format)
         message_payload = json.loads(msg.payload.decode())
         sensor_value = message_payload
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        timestamp = datetime.now().astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
 
         # Determine the appropriate table based on the topic
         if msg.topic == "sensor/plant/coffea/humidity":
